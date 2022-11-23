@@ -24,7 +24,7 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserInput>, res: Re
       return res.status(401).json({ message: 'Invalid log credentials' });
     }
     // sign tokens and send to client
-    const { accessToken, refreshToken } = await signTokens(user);
+    const { accessToken, refreshToken } = await signTokens({ id: user._id });
     res.cookie('sb-access-token', accessToken, accessTokenCookieOptions);
     res.cookie('sb-refresh-token', refreshToken, refreshTokenCookieOptions);
     res.status(200).json({ message: 'sucessfully authenticates', user: user._id });
