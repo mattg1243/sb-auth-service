@@ -1,5 +1,6 @@
 import { CookieOptions } from 'express';
 
+// TODO: implement httponly cookies
 export const cookieOptions: CookieOptions = {
   httpOnly: true,
   sameSite: 'lax',
@@ -9,8 +10,8 @@ if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
 export const accessTokenCookieOptions: CookieOptions = {
   ...cookieOptions,
-  expires: new Date(Date.now() + 50 * 60 * 1000),
-  maxAge: 50 * 60 * 1000,
+  expires: new Date(Date.now() + 600 * 60 * 1000),
+  maxAge: 600 * 60 * 1000,
 };
 
 export const refreshTokenCookieOptions: CookieOptions = {
