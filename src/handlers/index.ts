@@ -8,7 +8,9 @@ import bcrypt from 'bcrypt';
 import { GetUserForLoginRequest, GetUserForLoginResponse } from '../proto/user_pb';
 
 // intialize gRPC clients
-const userClient = new UserClient('localhost:4080', credentials.createInsecure());
+const USER_GRPC_HOST = process.env.USER_GRPC_HOST || 'localhost';
+const USER_GRPC_PORT = process.env.USER_GRPC_PORT || '4080';
+const userClient = new UserClient(`${USER_GRPC_HOST}:${USER_GRPC_PORT}`, credentials.createInsecure());
 
 export const indexHandler = (req: Request, res: Response, next: NextFunction) => {
   return res.status(200).json({ message: 'Auth server online!' });
