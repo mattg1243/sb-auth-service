@@ -7,12 +7,11 @@ import { UserClient } from '../proto/user_grpc_pb';
 import bcrypt from 'bcrypt';
 import { GetUserForLoginRequest, GetUserForLoginResponse } from '../proto/user_pb';
 import axios from 'axios';
+import { USER_HOST } from '../app';
 
 // intialize gRPC clients
 const USER_GRPC_HOST = process.env.USER_GRPC_HOST || 'http://localhost';
 const USER_GRPC_PORT = process.env.USER_GRPC_PORT || '4080';
-const USER_HTTP_HOST = process.env.USER_HTTP_HOST || 'http://localhost';
-const USER_HTTP_PORT = process.env.USER_HTTP_PORT || '8080';
 const userClient = new UserClient(`${USER_GRPC_HOST}:${USER_GRPC_PORT}`, credentials.createInsecure());
 
 export const indexHandler = (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +27,7 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserInput>, res: Re
   try {
     // get the user object from User service
 
-    const responseFromUserService = await axios.post(`${USER_HTTP_HOST}:${USER_HTTP_PORT}/login`, { email });
+    const responseFromUserService = await axios.post(`${USER_HOST}/login`, { email });
     const user = responseFromUserService.data;
     console.log('password from db: \n', user.password, '\npassword from request: \n', password);
     // check if passwords match
