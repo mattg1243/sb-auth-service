@@ -12,7 +12,7 @@ import { USER_HOST } from '../app';
 // intialize gRPC clients
 const USER_GRPC_HOST = process.env.USER_GRPC_HOST || 'http://localhost';
 const USER_GRPC_PORT = process.env.USER_GRPC_PORT || '4080';
-const userClient = new UserClient(`${USER_GRPC_HOST}:${USER_GRPC_PORT}`, credentials.createInsecure());
+// const userClient = new UserClient(`${USER_GRPC_HOST}:${USER_GRPC_PORT}`, credentials.createInsecure());
 
 export const indexHandler = (req: Request, res: Response, next: NextFunction) => {
   return res.status(200).json({ message: 'Auth server online!' });
@@ -22,14 +22,13 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserInput>, res: Re
   const { email, password } = req.body;
   console.log('  ---  POST /login');
   // first call the User service to see if the user exists
-  const userRequest = new GetUserForLoginRequest();
-  userRequest.setEmail(email);
+  // const userRequest = new GetUserForLoginRequest();
+  // userRequest.setEmail(email);
   try {
     // get the user object from User service
 
     const responseFromUserService = await axios.post(`${USER_HOST}/login`, { email });
     const user = responseFromUserService.data;
-    console.log('password from db: \n', user.password, '\npassword from request: \n', password);
     // check if passwords match
     if (!(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid log credentials' });
