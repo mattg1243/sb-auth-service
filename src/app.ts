@@ -8,7 +8,7 @@ dotenv.config();
 
 // load env variables
 const PORT = process.env.PORT || 8081;
-const CLIENT_HOST = process.env.CLIENT_HOST || 'http://localhost:3000';
+export const CLIENT_HOST = process.env.CLIENT_HOST || 'http://localhost:3000';
 export const USER_HOST = process.env.USER_HOSTNAME || 'http://localhost:8080';
 // create express app
 const app = express();
