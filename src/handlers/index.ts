@@ -2,16 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import { signTokens } from '../services/jwt';
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from '../utils/cookie';
 import { LoginUserInput } from '../database/schmeas/Auth.schema';
-import { credentials } from '@grpc/grpc-js';
-import { UserClient } from '../proto/user_grpc_pb';
+// import { credentials } from '@grpc/grpc-js';
+// import { UserClient } from '../proto/user_grpc_pb';
+// import { GetUserForLoginRequest, GetUserForLoginResponse } from '../proto/user_pb';
 import bcrypt from 'bcrypt';
-import { GetUserForLoginRequest, GetUserForLoginResponse } from '../proto/user_pb';
 import axios from 'axios';
-import { USER_HOST } from '../app';
+import { USER_HOST, CLIENT_HOST } from '../app';
 
 // intialize gRPC clients
-const USER_GRPC_HOST = process.env.USER_GRPC_HOST || 'http://localhost';
-const USER_GRPC_PORT = process.env.USER_GRPC_PORT || '4080';
+// const USER_GRPC_HOST = process.env.USER_GRPC_HOST || 'http://localhost';
+// const USER_GRPC_PORT = process.env.USER_GRPC_PORT || '4080';
 // const userClient = new UserClient(`${USER_GRPC_HOST}:${USER_GRPC_PORT}`, credentials.createInsecure());
 
 export const indexHandler = (req: Request, res: Response, next: NextFunction) => {
@@ -68,4 +68,11 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserInput>, res: Re
     console.error(err);
     res.status(500).json({ message: 'an error occured' });
   }
+};
+
+export const logoutHandler = (req: Request, res: Response) => {
+  res.clearCookie('sb-access-token');
+  res.clearCookie('sb-refresh-token');
+  console.log('user is now being redirected to the login screen...supposedly');
+  return res.status(200).json({ message: 'user has been successfully logged out' });
 };
