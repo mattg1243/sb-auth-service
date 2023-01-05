@@ -3,7 +3,7 @@ import { CookieOptions } from 'express';
 // TODO: implement httponly cookies
 export const cookieOptions: CookieOptions = {
   httpOnly: true,
-  sameSite: 'lax',
+  sameSite: 'none',
 };
 
 if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
