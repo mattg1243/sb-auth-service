@@ -3,8 +3,8 @@ import { CookieOptions } from 'express';
 // TODO: implement httponly cookies
 export const cookieOptions: CookieOptions = {
   httpOnly: false,
-  sameSite: 'none',
-  domain: process.env.NODE_ENV === 'production' ? 'https://sb-gateway.onrender.com' : 'http://localhost',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'http://localhost',
 };
 
 if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
