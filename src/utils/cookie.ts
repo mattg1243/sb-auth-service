@@ -4,7 +4,7 @@ import { CookieOptions } from 'express';
 export const cookieOptions: CookieOptions = {
   httpOnly: false,
   sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'http://localhost',
+  domain: process.env.NODE_ENV === 'production' ? 'sb-gateway.onrender.com' : 'http://localhost',
 };
 
 if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
